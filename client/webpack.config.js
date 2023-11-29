@@ -12,7 +12,6 @@ module.exports = () => {
     entry: {
       main: './src/js/index.js',
       install: './src/js/install.js',
-      editor: './src/js/editor.js',
       // header: './src/js/header.js'
     },
     output: {
@@ -25,19 +24,19 @@ module.exports = () => {
         title: 'JATE Text Editor'
       }),
       new InjectManifest({
-        swSrc: './src-sw.js',
-        swDest: 'src-sw.js',
+        swSrc: './src-sw.js'
       }),
       new WebpackPwaManifest({
         fingerprints: false,
         inject: true,
         name: 'JATE Text Editor',
-        short_name: 'JATE',
+        short_name: 'jate',
         description: 'Just Another Text Editor',
         background_color: '#225ca3',
         theme_color: '#225ca3',
         start_url: './',
         publicPath: './',
+        // crossorigin: 'use-credentials',
         icons: [
           {
             src: path.resolve('src/images/logo.png'),
@@ -54,9 +53,13 @@ module.exports = () => {
           test: /\.css$/i,
           use: ['style-loader', 'css-loader'],
         },
+        // {
+        //   test: /.(png|svg|jpg|jpeg|gif)$/i,
+        //   type: 'asset/resource'
+        // },
         {
           test: /\.m?js$/,
-          exclude: /node_modules/,
+          exclude: /(node_modules|bower_components)/,
           use: {
             loader: 'babel-loader',
             options: {
